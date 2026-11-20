@@ -1,0 +1,40 @@
+name: Tekkashop auto-post
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # every 15 min; GitHub may delay runs by a few minutes
+  workflow_dispatch:          # lets you press "Run workflow" manually
+
+permissions:
+  contents: write
+
+concurrency:
+  group: autopost
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Configure git
+        run: |
+          git config user.name "tekka-autopost"
+          git config user.email "autopost@users.noreply.github.com"
+      - name: Post due items
+        env:
+          SHEET_CSV_URL: ${{ secrets.SHEET_CSV_URL }}
+          META_PAGE_TOKEN: ${{ secrets.META_PAGE_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+        run: python src/main.py
+      - name: Save state
+        if: always()
+        run: |
+          git add state posters || true
+          git diff --cached --quiet || (git commit -m "update state" && git pull --rebase origin ${{ github.ref_name }} && git push origin HEAD:${{ github.ref_name }})

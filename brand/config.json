@@ -1,0 +1,24 @@
+{
+  "shop_name": "TEKKASHOP",
+  "cta_text": "Shop now · link in bio",
+  "currency_fallback": "RM",
+  "timezone": "Asia/Kuala_Lumpur",
+  "late_tolerance_hours": 6,
+  "max_attempts": 3,
+  "graph_version": "v21.0",
+  "colors": {
+    "background": "#F2EDE6",
+    "card": "#FFFFFF",
+    "text": "#2B2B2B",
+    "muted": "#7A736B",
+    "accent": "#2B2B2B",
+    "accent_text": "#FFFFFF",
+    "price_bg": "#E4D9CB"
+  },
+  "default_hooks": [
+    "Your new favourite place to relax.",
+    "Unbox your new favourite spot to relax.",
+    "Make home the place you never want to leave.",
+    "Comfort that fits your corner."
+  ]
+}
