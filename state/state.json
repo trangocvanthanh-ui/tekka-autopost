@@ -3,7 +3,7 @@
     "status": "missed"
   },
   "7cd74a7181ff": {
-    "attempts": 1,
+    "attempts": 2,
     "error": "FB: API access blocked. (code 200, subcode 5258005)"
   },
   "af303eb259b8": {},
