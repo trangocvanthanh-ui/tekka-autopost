@@ -13,6 +13,10 @@ Thêm một dòng vào Sheet:
 | hook | | Your new favourite place to relax. | để trống = bot chọn 1 câu trong brand/config.json |
 | name, price, image_url | | | để trống = tự lấy từ trang sản phẩm; điền = ghi đè |
 | platforms | | IG hoặc FB | để trống = cả hai |
+| short_url | | tekkashop.com.my/products/luna-sofa | đường dẫn ngắn, **in thành chữ** dưới nút "Shop now" trên poster (khách gõ hoặc tìm, không bấm được vì API Story không có sticker link). Để trống = poster ghi "Shop now · link in bio" |
+| approved | | Y | **cổng duyệt bài.** Nếu Sheet có cột này, chỉ dòng ghi Y (hoặc YES/TRUE/1) mới được đăng; dòng trống hoặc N bị giữ lại và log báo "waiting for approval". Sheet không có cột này thì đăng mọi dòng như trước |
+
+Để dùng 2 cột mới, thêm tiêu đề `short_url` và `approved` vào dòng 1 của tab Queue (cột I và J), đúng tên, viết thường.
 
 Bài đến giờ sẽ được đăng trong vòng ~15–25 phút (GitHub đôi khi trễ vài phút). Nếu quá 6 giờ so với giờ hẹn mà chưa đăng được, bài bị đánh dấu "missed" và bỏ qua. Xem kết quả ở tab **Actions** trên GitHub (mục Summary) hoặc file `state/state.json`.
 

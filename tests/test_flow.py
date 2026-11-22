@@ -15,6 +15,20 @@ CSV = """date,time,product_url,hook,name,price,image_url,platforms
 2026-11-20,07:00,http://localhost:8765/sofa.html,,,,,
 """
 
+from sheet import parse_csv_text  # noqa: E402
+
+# --- parsing: short_url + approval gate -------------------------------------
+old = parse_csv_text(CSV)
+assert old[0].approved is True and old[0].short_url == "", "old sheets must keep working"
+new = parse_csv_text("date,time,product_url,hook,name,price,image_url,platforms,short_url,approved\n"
+                     "2026-11-20,07:00,http://a/1,,,,,,bit.ly/x,Y\n"
+                     "2026-11-20,07:05,http://a/2,,,,,,,\n"
+                     "2026-11-20,07:10,http://a/3,,,,,,,n\n"
+                     "2026-11-20,07:15,,,,,,,,Y\n")
+assert [r.approved for r in new] == [True, False, False], [r.approved for r in new]
+assert new[0].short_url == "bit.ly/x" and len(new) == 3, "row without product_url is ignored"
+
+
 
 def run(now, fb_fails=False):
     calls = {"ig": 0, "fb": 0}

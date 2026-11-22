@@ -94,8 +94,14 @@ def main():
                       os.environ["FB_PAGE_ID"], cfg["graph_version"])
 
     failures = 0
+    waiting = [r for r in rows if not r.approved and not state.data.get(r.id, {}).get("status")]
+    if waiting:
+        log(f"{len(waiting)} row(s) waiting for approval (approved column is not Y): "
+            f"lines {', '.join(str(r.line) for r in waiting)}", summary)
     for row in rows:
         tag = f"row {row.line} [{row.id}]"
+        if not row.approved:
+            continue
         try:
             when = parse_when(row.date, row.time, tz)
         except ValueError as e:
@@ -136,7 +142,8 @@ def main():
                     raise RuntimeError("no product image found; add an image_url in the sheet")
                 hook = row.hook or cfg["default_hooks"][int(row.id, 16) % len(cfg["default_hooks"])]
                 price_txt = format_price(info["price"], info["currency"], cfg["currency_fallback"])
-                img = build_poster(download_image(info["image_url"]), info["name"] or "", price_txt, hook, cfg)
+                img = build_poster(download_image(info["image_url"]), info["name"] or "", price_txt, hook, cfg,
+                                   short_url=row.short_url)
                 save_jpeg(img, poster_path)
 
             if args.dry_run:

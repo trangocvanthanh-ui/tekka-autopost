@@ -56,7 +56,15 @@ def _rounded_mask(size, radius):
     return m
 
 
-def build_poster(image_bytes: bytes, name: str, price: str, hook: str, cfg: dict) -> Image.Image:
+def display_link(url: str) -> str:
+    """'https://www.tekkashop.com.my/x' -> 'tekkashop.com.my/x' (what we print on the poster)."""
+    u = re.sub(r"^https?://", "", (url or "").strip(), flags=re.I)
+    u = re.sub(r"^www\.", "", u, flags=re.I)
+    return u.rstrip("/")
+
+
+def build_poster(image_bytes: bytes, name: str, price: str, hook: str, cfg: dict,
+                 short_url: str = "") -> Image.Image:
     c = cfg["colors"]
     img = Image.new("RGB", (W, H), c["background"])
     d = ImageDraw.Draw(img)
@@ -80,7 +88,9 @@ def build_poster(image_bytes: bytes, name: str, price: str, hook: str, cfg: dict
     # reserve space for name + price/cta
     name_f, name_lines = _fit(d, name, "Medium", 44, 34, inner_w, 2) if name else (None, [])
     name_h = int(name_f.size * 1.3) * len(name_lines) if name_lines else 0
-    bottom_block = (name_h + 24 if name_h else 0) + 96 + 28 + 96
+    link_txt = display_link(short_url)
+    link_h = 24 + 46 if link_txt else 0
+    bottom_block = (name_h + 24 if name_h else 0) + 96 + 28 + 96 + link_h
     card_bottom = H - SAFE_BOTTOM - bottom_block
     card_h = max(card_bottom - y, 400)
     card_w = inner_w
@@ -127,12 +137,18 @@ def build_poster(image_bytes: bytes, name: str, price: str, hook: str, cfg: dict
 
     # CTA
     cf = _font("Medium", 40)
-    cta = cfg["cta_text"]
+    cta = cfg.get("cta_text_with_link", "Shop now") if link_txt else cfg["cta_text"]
     tw = d.textlength(cta, font=cf)
     cw, ch = int(tw + 110), 96
     x0 = (W - cw) // 2
     d.rounded_rectangle((x0, y, x0 + cw, y + ch), ch // 2, fill=c["accent"])
     d.text((W / 2, y + ch / 2), cta, font=cf, fill=c["accent_text"], anchor="mm")
+    y += ch + 24
+
+    # short link (plain text, customers type or search it: Story API has no link sticker)
+    if link_txt:
+        lf, lines = _fit(d, link_txt, "Medium", 38, 24, inner_w, 1)
+        d.text((W / 2, y), lines[0] if lines else link_txt, font=lf, fill=c["text"], anchor="mt")
     return img
 
 
