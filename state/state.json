@@ -8,7 +8,10 @@
     "status": "failed"
   },
   "af303eb259b8": {},
-  "c5aeeabaf4de": {},
+  "c5aeeabaf4de": {
+    "attempts": 1,
+    "error": "FB: API access blocked. (code 200, subcode 5258005)"
+  },
   "ce57708093d1": {
     "FB_id": "1172732945271803",
     "IG_id": "18094910375679004",
