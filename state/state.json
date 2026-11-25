@@ -9,7 +9,8 @@
   },
   "af303eb259b8": {
     "attempts": 3,
-    "error": "FB: API access blocked. (code 200, subcode 5258005)"
+    "error": "FB: API access blocked. (code 200, subcode 5258005)",
+    "status": "failed"
   },
   "c5aeeabaf4de": {
     "attempts": 3,
