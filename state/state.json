@@ -2,16 +2,25 @@
   "3987fc3aebd7": {
     "status": "missed"
   },
+  "3aff716873b9": {
+    "FB_id": "1842689473422141",
+    "IG_id": "17947591668365996",
+    "attempts": 1,
+    "posted_at": "2026-11-26T17:24:20.325450+08:00",
+    "status": "done"
+  },
   "7cd74a7181ff": {
     "attempts": 3,
     "error": "FB: API access blocked. (code 200, subcode 5258005)",
     "status": "failed"
   },
+  "88359b4901af": {},
   "af303eb259b8": {
     "attempts": 3,
     "error": "FB: API access blocked. (code 200, subcode 5258005)",
     "status": "failed"
   },
+  "bf9ef90a8ef2": {},
   "c5aeeabaf4de": {
     "attempts": 3,
     "error": "FB: API access blocked. (code 200, subcode 5258005)",
