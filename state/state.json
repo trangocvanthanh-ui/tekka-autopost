@@ -14,7 +14,13 @@
     "error": "FB: API access blocked. (code 200, subcode 5258005)",
     "status": "failed"
   },
-  "88359b4901af": {},
+  "88359b4901af": {
+    "FB_id": "1865494361313274",
+    "IG_id": "18229413556330703",
+    "attempts": 1,
+    "posted_at": "2026-11-27T18:49:53.327387+08:00",
+    "status": "done"
+  },
   "af303eb259b8": {
     "attempts": 3,
     "error": "FB: API access blocked. (code 200, subcode 5258005)",
